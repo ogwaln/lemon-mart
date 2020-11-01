@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core'
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component'
 import { RouterModule, Routes } from '@angular/router'
+
 import { HomeComponent } from './home/home.component'
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component'
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -9,6 +10,10 @@ const routes: Routes = [
   {
     path: 'manager',
     loadChildren: () => import('./manager/manager.module').then((m) => m.ManagerModule),
+  },
+  {
+    path: 'user',
+    loadChildren: () => import('./user/user.module').then((m) => m.UserModule),
   },
   { path: '**', component: PageNotFoundComponent },
 ]
