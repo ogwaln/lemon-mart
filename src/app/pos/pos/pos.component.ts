@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core'
 
 @Component({
-  selector: 'app-navigation-menu',
+  selector: 'app-pos',
   template: `
     <p>
-      navigation-menu works!
+      pos works!
     </p>
   `,
   styles: [
   ]
 })
-export class NavigationMenuComponent implements OnInit {
+export class PosComponent implements OnInit {
 
   constructor() { }
 
