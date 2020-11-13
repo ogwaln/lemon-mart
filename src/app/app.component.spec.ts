@@ -2,8 +2,10 @@ import { TestBed } from '@angular/core/testing'
 import { MediaObserver } from '@angular/flex-layout'
 import { MatIconRegistry } from '@angular/material/icon'
 import { DomSanitizer } from '@angular/platform-browser'
+import { autoSpyObj } from 'angular-unit-test-helper'
 
 import { AppComponent } from './app.component'
+import { AuthService } from './auth/auth.service'
 import {
   DomSanitizerFake,
   MatIconRegistryFake,
@@ -19,6 +21,7 @@ describe('AppComponent', () => {
         { provide: MediaObserver, useClass: MediaObserverFake },
         { provide: MatIconRegistry, useClass: MatIconRegistryFake },
         { provide: DomSanitizer, useClass: DomSanitizerFake },
+        { provide: AuthService, useValue: autoSpyObj(AuthService) },
       ],
       declarations: [AppComponent],
     }).compileComponents()
