@@ -15,6 +15,7 @@ const routes: Routes = [
       { path: '', redirectTo: '/inventory/home', pathMatch: 'full' },
       { path: 'home', component: InventoryHomeComponent },
       { path: 'stock-entry', component: StockEntryComponent },
+      { path: 'stockEntry', component: StockEntryComponent },
       { path: 'products', component: ProductsComponent },
       { path: 'categories', component: CategoriesComponent },
     ],
