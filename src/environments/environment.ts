@@ -8,7 +8,7 @@ export const environment = {
   production: false,
   authMode: AuthMode.InMemory,
   firebase: {
-    apiKey: 'AIzaSyCyv_ZFRrFHa9uxmce3WC1sd5ejS7TzNlU',
+    apiKey: 'AIzaSyD3knqIf2NQPFEbe8sa2mX3TfY9cKDUTLE',
     authDomain: 'lemon-mart-6aa50.web.app',
     databaseURL: 'https://lemon-mart-6aa50.webio.app/',
     projectId: 'lemon-mart-6aa50',
