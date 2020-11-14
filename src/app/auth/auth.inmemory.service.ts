@@ -38,6 +38,7 @@ export class InMemoryAuthService extends AuthService {
       "You're using the InMemoryAuthService. *** Do not use this service in Production ***"
     )
   }
+
   protected authProvider(
     email: string,
     password: string
