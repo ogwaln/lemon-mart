@@ -23,7 +23,7 @@ jobs:
           paths:
             - ~/.npm
 
-      - run: npx ng build
+      - run: npx ng build --prod
 
       - run: npm run test:coverage -- --watch=false
       - run: npm run e2e
