@@ -34,7 +34,7 @@ jobs:
 
       - run:
           name: Tar & Gzip compiled app
-          command: tar zcf dist.tar.gz dist/lemon-mart-app
+          command: tar -zcf dist.tar.gz dist/lemon-mart-app
       - store_artifacts:
           path: dist.tar.gz
 
