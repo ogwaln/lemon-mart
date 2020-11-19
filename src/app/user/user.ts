@@ -40,6 +40,7 @@ export interface IUser {
 
 export class User implements IUser {
   constructor(
+    // the underscore does not pass linting, sigh
     public _id: string = '',
     public email: string = '',
     public name: IName = { first: '', middle: '', last: '' },
