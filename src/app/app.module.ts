@@ -12,7 +12,6 @@ import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { AuthHttpInterceptor } from './auth/auth-http-interceptor'
 import { authFactory } from './auth/auth.factory'
-import { FirebaseAuthService } from './auth/auth.firebase.service'
 import { AuthService } from './auth/auth.service'
 import { SimpleDialogComponent } from './common/simple-dialog.component'
 import { HomeComponent } from './home/home.component'
@@ -23,24 +22,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 // import { AngularFireModule } from '@angular/fire/firebase.app.module'
 
-
-
-
-
-
-
-
-
-
-
 // import { InMemoryAuthService } from './auth/auth.inmemory.service'
-
-
-
-
-
-
-
 
 @NgModule({
   declarations: [
@@ -63,7 +45,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
   ],
   providers: [
     // { provide: AuthService, useClass: InMemoryAuthService },
-    //{ provide: AuthService, useClass: FirebaseAuthService },
+    // { provide: AuthService, useClass: FirebaseAuthService },
     { provide: AuthService, useFactory: authFactory, deps: [AngularFireAuth] },
 
     {
