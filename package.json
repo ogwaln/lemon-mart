@@ -31,7 +31,9 @@
     "docker:taillogs": "echo Web Server Logs: && cross-conf-env docker logs -f $npm_package_config_imageName",
     "docker:open": "sleep 2 && cross-conf-env open-cli http://localhost:$npm_package_config_imagePort",
     "docker:debugmessage": "echo Docker Debug Completed Successfully! Hit Ctrl+C to terminate log tailing.",
-    "docker:debug": "run-s -cs docker:build docker:run docker:open docker:debugmessage docker:taillogs"
+    "docker:debug": "run-s -cs docker:build docker:run docker:open docker:debugmessage docker:taillogs",
+    "prenow:publish": "npm run build",
+    "now:publish": "now --platform-version 2 dist/lemon-mart"
   },
   "private": true,
   "dependencies": {
@@ -110,9 +112,9 @@
     }
   },
   "config": {
-    "imageRepo": "[namespace]/[repository]",
-    "imageName": "custom_app_name",
-    "imagePort": "3000",
+    "imageRepo": "thosejwis/lemon-mart-1",
+    "imageName": "lemon-mart",
+    "imagePort": "8080",
     "internalContainerPort": "3000"
   }
 }
