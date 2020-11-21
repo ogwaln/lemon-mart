@@ -23,7 +23,6 @@ const modules = [
   MatDialogModule,
   MatSidenavModule,
   MatListModule,
-  // MatMenuModule,
 ]
 
 @NgModule({
@@ -40,7 +39,6 @@ const modules = [
     MatDialogModule,
     MatSidenavModule,
     MatListModule,
-    // MatMenuModule,
   ],
   exports: modules,
 })

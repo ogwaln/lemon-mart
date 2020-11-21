@@ -30,17 +30,4 @@ export class HomeComponent implements OnInit {
   constructor(public authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {}
-
-  // login() {
-  //   this.authService.login('manager@test.com', '12345678')
-
-  //   combineLatest([this.authService.authStatus$, this.authService.currentUser$])
-  //     .pipe(
-  //       filter(([authStatus, user]) => authStatus.isAuthenticated && user?._id !== ''),
-  //       tap(() => {
-  //         this.router.navigate(['/manager'])
-  //       })
-  //     )
-  //     .subscribe()
-  // }
 }

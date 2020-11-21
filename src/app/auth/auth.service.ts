@@ -10,7 +10,6 @@ import { CacheService } from './cache.service'
 
 @Injectable()
 export abstract class AuthService extends CacheService implements IAuthService {
-
   constructor() {
     super()
 
