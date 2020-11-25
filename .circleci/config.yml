@@ -6,6 +6,7 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
+      # specify version number to bypass permission error in CircleCi
       - setup_remote_docker:
           version: 19.03.12
       - run:
