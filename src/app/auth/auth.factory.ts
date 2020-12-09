@@ -9,8 +9,8 @@ import { FirebaseAuthService } from './auth.firebase.service'
 export function authFactory(afAuth: AngularFireAuth) {
   switch (environment.authMode) {
     case AuthMode.InMemory:
-      // return new InMemoryAuthService()
-      throw new Error('Not yet implemented')
+    // return new InMemoryAuthService()
+    // throw new Error('Not yet implemented')
     case AuthMode.Firebase:
       return new FirebaseAuthService(afAuth)
     case AuthMode.CustomServer:
