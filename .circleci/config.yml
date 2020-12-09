@@ -8,9 +8,9 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      - run: export PATH="$HOME/.npm-global/bin:$PATH"
-      - run: npm test -- --watch=false --code-coverage
-      - run: npm run e2e
+
+      # - run: npm test -- --watch=false --code-coverage
+      # - run: npm run e2e
 
       # specify version number to bypass permission error in CircleCi
       - setup_remote_docker:
