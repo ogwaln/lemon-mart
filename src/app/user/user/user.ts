@@ -1,4 +1,4 @@
-import { Role } from '../auth/auth.enum'
+import { Role } from '../../auth/auth.enum'
 
 export interface IName {
   first: string
@@ -30,6 +30,7 @@ export interface IUser {
   level: number
   address: {
     line1: string
+    line2?: string
     city: string
     state: string
     zip: string
@@ -40,15 +41,15 @@ export interface IUser {
 
 export class User implements IUser {
   constructor(
-    // the underscore does not pass linting, sigh
-    public _id: string = '',
-    public email: string = '',
-    public name: IName = { first: '', middle: '', last: '' },
-    public picture: string = '',
+    // tslint:disable-next-line: variable-name
+    public _id = '',
+    public email = '',
+    public name = { first: '', middle: '', last: '' } as IName,
+    public picture = '',
     public role = Role.None,
-    public userStatus: boolean = false,
     public dateOfBirth: Date | null = null,
-    public level: number = 0,
+    public userStatus = false,
+    public level = 0,
     public address = {
       line1: '',
       city: '',
@@ -73,8 +74,8 @@ export class User implements IUser {
       user.name,
       user.picture,
       user.role as Role,
-      user.userStatus,
       user.dateOfBirth,
+      user.userStatus,
       user.level,
       user.address,
       user.phones

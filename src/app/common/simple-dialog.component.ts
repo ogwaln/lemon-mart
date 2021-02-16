@@ -18,8 +18,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
         {{ data.okText }}
       </button>
     </mat-dialog-actions>
-  `,
-  styles: [],
+  `
 })
 export class SimpleDialogComponent {
   constructor(

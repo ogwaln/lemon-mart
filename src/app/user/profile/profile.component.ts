@@ -8,7 +8,7 @@ import { $enum } from 'ts-enum-util'
 import { Role } from '../../auth/auth.enum'
 import { AuthService } from '../../auth/auth.service'
 import { BaseFormComponent } from '../../common/base-form.class'
-import { UiService } from '../../common/ui-service'
+import { UiService } from '../../common/ui.service'
 import {
   EmailValidation,
   OptionalTextValidation,

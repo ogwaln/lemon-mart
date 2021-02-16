@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { ComponentFixture, TestBed, async } from '@angular/core/testing'
 
 import { ManagerHomeComponent } from './manager-home.component'
 
@@ -6,11 +6,11 @@ describe('ManagerHomeComponent', () => {
   let component: ManagerHomeComponent
   let fixture: ComponentFixture<ManagerHomeComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
       declarations: [ManagerHomeComponent],
     }).compileComponents()
-  })
+  }))
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ManagerHomeComponent)

@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { combineLatest } from 'rxjs'
 import { catchError, filter, tap } from 'rxjs/operators'
 import { SubSink } from 'subsink'
 
+import { environment } from '../../environments/environment'
 import { AuthMode, Role } from '../auth/auth.enum'
 import { AuthService } from '../auth/auth.service'
-import { UiService } from '../common/ui-service'
+import { UiService } from '../common/ui.service'
 import { EmailValidation, PasswordValidation } from '../common/validations'
 
 @Component({
@@ -26,21 +27,19 @@ import { EmailValidation, PasswordValidation } from '../common/validations'
     `,
   ],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   private subs = new SubSink()
-  redirectUrl: string | undefined
+  loginForm!: FormGroup
   loginError = ''
-  loginForm: FormGroup = this.buildLoginForm()
+  redirectUrl!: string
   roles = Object.keys(Role)
-  // temp code, a proper helper is needed
+  authMode = environment.authMode
   AuthMode = AuthMode
-  authMode = AuthMode.CustomServer
-
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute,
+    route: ActivatedRoute,
     private uiService: UiService
   ) {
     this.subs.sink = route.paramMap.subscribe(
@@ -48,13 +47,17 @@ export class LoginComponent implements OnInit {
     )
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.authService.logout()
-    this.buildLoginForm
+    this.buildLoginForm()
   }
 
-  buildLoginForm(): FormGroup {
-    return this.formBuilder.group({
+  ngOnDestroy(): void {
+    this.subs.unsubscribe()
+  }
+
+  buildLoginForm() {
+    this.loginForm = this.formBuilder.group({
       email: ['', EmailValidation],
       password: ['', PasswordValidation],
     })
@@ -73,7 +76,6 @@ export class LoginComponent implements OnInit {
         filter(([authStatus, user]) => authStatus.isAuthenticated && user?._id !== ''),
         tap(([authStatus, user]) => {
           this.uiService.showToast(`Welcome ${user.fullName}! Role: ${user.role}`)
-          // this.uiService.showDialog(`Welcome ${user.fullName}!`, `Role: ${user.role}`)
           this.router.navigate([
             this.redirectUrl || this.homeRoutePerRole(user.role as Role),
           ])

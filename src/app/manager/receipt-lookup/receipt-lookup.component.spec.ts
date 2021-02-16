@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { ComponentFixture, TestBed, async } from '@angular/core/testing'
 
 import { ReceiptLookupComponent } from './receipt-lookup.component'
 
@@ -6,11 +6,11 @@ describe('ReceiptLookupComponent', () => {
   let component: ReceiptLookupComponent
   let fixture: ComponentFixture<ReceiptLookupComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
       declarations: [ReceiptLookupComponent],
     }).compileComponents()
-  })
+  }))
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ReceiptLookupComponent)

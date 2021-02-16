@@ -1,22 +1,19 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing'
-import {
-  commonTestingModules,
-  commonTestingProviders,
-} from 'src/app/common/common.testing'
+import { ComponentFixture, TestBed, async } from '@angular/core/testing'
 
+import { commonTestingModules, commonTestingProviders } from '../../common/common.testing'
 import { LogoutComponent } from './logout.component'
 
 describe('LogoutComponent', () => {
   let component: LogoutComponent
   let fixture: ComponentFixture<LogoutComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
       imports: commonTestingModules,
       providers: commonTestingProviders,
       declarations: [LogoutComponent],
     }).compileComponents()
-  })
+  }))
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LogoutComponent)

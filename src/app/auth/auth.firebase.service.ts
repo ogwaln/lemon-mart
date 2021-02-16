@@ -39,9 +39,8 @@ export class FirebaseAuthService extends AuthService {
       (res) => {
         const firebaseUser: FirebaseUser | null = res.user
         firebaseUser?.getIdToken().then(
-          (token: any) =>
-            serverResponse$.next({ accessToken: token } as IServerAuthResponse),
-          (err: any) => serverResponse$.error(err)
+          (token) => serverResponse$.next({ accessToken: token } as IServerAuthResponse),
+          (err) => serverResponse$.error(err)
         )
       },
       (err) => serverResponse$.error(err)

@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing'
 
 import { commonTestingModules } from './common.testing'
-import { UiService } from './ui-service'
+import { UiService } from './ui.service'
 
-describe('UiServiceService', () => {
+describe('UiService', () => {
   let service: UiService
 
   beforeEach(() => {

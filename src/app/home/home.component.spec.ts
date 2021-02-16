@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { ComponentFixture, TestBed, async } from '@angular/core/testing'
+import { createComponentMock } from 'angular-unit-test-helper'
 
 import { commonTestingModules, commonTestingProviders } from '../common/common.testing'
 import { HomeComponent } from './home.component'
@@ -7,13 +8,13 @@ describe('HomeComponent', () => {
   let component: HomeComponent
   let fixture: ComponentFixture<HomeComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: commonTestingModules,
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [HomeComponent, createComponentMock('LoginComponent')],
       providers: commonTestingProviders,
-      declarations: [HomeComponent],
+      imports: commonTestingModules,
     }).compileComponents()
-  })
+  }))
 
   beforeEach(() => {
     fixture = TestBed.createComponent(HomeComponent)

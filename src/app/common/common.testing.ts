@@ -10,7 +10,7 @@ import { Observable, Subscription, of } from 'rxjs'
 
 import { AppMaterialModule } from '../app-material.module'
 import { AuthService } from '../auth/auth.service'
-import { UiService } from './ui-service'
+import { UiService } from './ui.service'
 
 const FAKE_SVGS = {
   lemon: '<svg><path id="lemon" name="lemon"></path></svg>',

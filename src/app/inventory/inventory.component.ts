@@ -2,6 +2,14 @@ import { Component, OnInit } from '@angular/core'
 
 @Component({
   selector: 'app-inventory',
+  styles: [
+    `
+      .active-link {
+        font-weight: bold;
+        border-bottom: 2px solid #005005;
+      }
+    `,
+  ],
   template: `
     <mat-toolbar color="accent" fxLayoutGap="8px">
       <a mat-button routerLink="/inventory/home" routerLinkActive="active-link">
@@ -19,14 +27,6 @@ import { Component, OnInit } from '@angular/core'
     </mat-toolbar>
     <router-outlet></router-outlet>
   `,
-  styles: [
-    `
-      .active-link {
-        font-weight: bold;
-        border-bottom: 2px solid #005005;
-      }
-    `,
-  ],
 })
 export class InventoryComponent implements OnInit {
   constructor() {}

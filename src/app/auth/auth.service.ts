@@ -8,20 +8,32 @@ import { IUser, User } from '../user/user/user'
 import { Role } from './auth.enum'
 import { CacheService } from './cache.service'
 
+export interface IAuthStatus {
+  isAuthenticated: boolean
+  userRole: Role
+  userId: string
+}
+
+export interface IServerAuthResponse {
+  accessToken: string
+}
+
+export const defaultAuthStatus: IAuthStatus = {
+  isAuthenticated: false,
+  userRole: Role.None,
+  userId: '',
+}
+
+export interface IAuthService {
+  readonly authStatus$: BehaviorSubject<IAuthStatus>
+  readonly currentUser$: BehaviorSubject<IUser>
+  login(email: string, password: string): Observable<void>
+  logout(clearToken?: boolean): void
+  getToken(): string
+}
+
 @Injectable()
 export abstract class AuthService extends CacheService implements IAuthService {
-  constructor() {
-    super()
-
-    if (this.hasExpiredToken()) {
-      this.logout(true)
-    } else {
-      this.authStatus$.next(this.getAuthStatusFromToken())
-      // To load user on browser refresh, resume pipeline must activate on the next cycle
-      // Which allows for all services to constructed properly
-      setTimeout(() => this.resumeCurrentUser$.subscribe(), 0)
-    }
-  }
   private getAndUpdateUserIfAuthenticated = pipe(
     filter((status: IAuthStatus) => status.isAuthenticated),
     mergeMap(() => this.getCurrentUser()),
@@ -35,27 +47,35 @@ export abstract class AuthService extends CacheService implements IAuthService {
     this.getAndUpdateUserIfAuthenticated
   )
 
+  constructor() {
+    super()
+
+    if (this.hasExpiredToken()) {
+      this.logout(true)
+    } else {
+      this.authStatus$.next(this.getAuthStatusFromToken())
+      // To load user on browser refresh, resume pipeline must activate on the next cycle
+      // Which allows for all services to constructed properly
+      setTimeout(() => this.resumeCurrentUser$.subscribe(), 0)
+    }
+  }
+
   protected abstract authProvider(
     email: string,
     password: string
   ): Observable<IServerAuthResponse>
   protected abstract transformJwtToken(token: unknown): IAuthStatus
-  protected abstract getCurrentUser(): Observable<IUser>
+  protected abstract getCurrentUser(): Observable<User>
 
   login(email: string, password: string): Observable<void> {
     this.clearToken()
+
     const loginResponse$ = this.authProvider(email, password).pipe(
       map((value) => {
         this.setToken(value.accessToken)
-        // const token = decode(value.accessToken)
-        // return this.transformJwtToken(token)
         return this.getAuthStatusFromToken()
       }),
       tap((status) => this.authStatus$.next(status)),
-      // filter((status: IAuthStatus) => status.isAuthenticated),
-      // mergeMap(() => this.getCurrentUser()),
-      // map((user: IUser) => this.currentUser$.next(user)),
-      // catchError(transformError)
       this.getAndUpdateUserIfAuthenticated
     )
 
@@ -69,7 +89,7 @@ export abstract class AuthService extends CacheService implements IAuthService {
     return loginResponse$
   }
 
-  logout(clearToken?: boolean): void {
+  logout(clearToken?: boolean) {
     if (clearToken) {
       this.clearToken()
     }
@@ -102,28 +122,4 @@ export abstract class AuthService extends CacheService implements IAuthService {
   protected getAuthStatusFromToken(): IAuthStatus {
     return this.transformJwtToken(decode(this.getToken()))
   }
-}
-
-export interface IAuthStatus {
-  isAuthenticated: boolean
-  userRole: Role
-  userId: string
-}
-
-export interface IServerAuthResponse {
-  accessToken: string
-}
-
-export const defaultAuthStatus: IAuthStatus = {
-  isAuthenticated: false,
-  userRole: Role.None,
-  userId: '',
-}
-
-export interface IAuthService {
-  readonly authStatus$: BehaviorSubject<IAuthStatus>
-  readonly currentUser$: BehaviorSubject<IUser>
-  login(email: string, password: string): Observable<void>
-  logout(clearToken?: boolean): void
-  getToken(): string
 }

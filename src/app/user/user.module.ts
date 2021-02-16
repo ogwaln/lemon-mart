@@ -9,7 +9,6 @@ import { FieldErrorModule } from '../user-controls/field-error/field-error.modul
 import { LemonRaterModule } from '../user-controls/lemon-rater/lemon-rater.module'
 import { LogoutComponent } from './logout/logout.component'
 import { NameInputComponent } from './name-input/name-input.component'
-import { NavigationMenuComponent } from './navigation-menu/navigation-menu.component'
 import { ProfileComponent } from './profile/profile.component'
 import { UserMaterialModule } from './user-material.module'
 import { UserRoutingModule } from './user-routing.module'
@@ -19,18 +18,17 @@ import { ViewUserComponent } from './view-user/view-user.component'
   declarations: [
     ProfileComponent,
     LogoutComponent,
-    NavigationMenuComponent,
     ViewUserComponent,
     NameInputComponent,
   ],
   imports: [
     CommonModule,
     UserRoutingModule,
-    UserMaterialModule,
-    AppMaterialModule,
     ReactiveFormsModule,
     FlexLayoutModule,
     FieldErrorModule,
+    AppMaterialModule,
+    UserMaterialModule,
     LemonRaterModule,
     NgxMaskModule.forChild(),
   ],
