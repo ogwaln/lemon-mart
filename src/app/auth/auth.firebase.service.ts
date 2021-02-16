@@ -4,7 +4,7 @@ import { User as UserCredentials } from '@firebase/auth-types'
 import { Observable, Subject } from 'rxjs'
 import { map } from 'rxjs/operators'
 
-import { IUser, User } from '../user/user'
+import { IUser, User } from '../user/user/user'
 import { Role } from './auth.enum'
 import {
   AuthService,

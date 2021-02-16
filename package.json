@@ -59,6 +59,7 @@
     "jasmine": "^3.6.4",
     "jwt-decode": "^3.1.2",
     "module": "^1.2.5",
+    "ngx-mask": "^11.1.4",
     "npm-check-updates": "^11.1.1",
     "pa11y": "^5.3.0",
     "rxjs": "^6.6.3",

@@ -5,7 +5,7 @@ import { combineLatest } from 'rxjs'
 import { catchError, filter, tap } from 'rxjs/operators'
 import { SubSink } from 'subsink'
 
-import { Role } from '../auth/auth.enum'
+import { AuthMode, Role } from '../auth/auth.enum'
 import { AuthService } from '../auth/auth.service'
 import { UiService } from '../common/ui-service'
 import { EmailValidation, PasswordValidation } from '../common/validations'
@@ -31,6 +31,10 @@ export class LoginComponent implements OnInit {
   redirectUrl: string | undefined
   loginError = ''
   loginForm: FormGroup = this.buildLoginForm()
+  roles = Object.keys(Role)
+  // temp code, a proper helper is needed
+  AuthMode = AuthMode
+  authMode = AuthMode.CustomServer
 
   constructor(
     private formBuilder: FormBuilder,

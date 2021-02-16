@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, pipe, throwError } from 'rxjs'
 import { catchError, filter, map, mergeMap, tap } from 'rxjs/operators'
 
 import { transformError } from '../common/common'
-import { IUser, User } from '../user/user'
+import { IUser, User } from '../user/user/user'
 import { Role } from './auth.enum'
 import { CacheService } from './cache.service'
 

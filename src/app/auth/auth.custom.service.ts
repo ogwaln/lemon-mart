@@ -6,7 +6,7 @@ import { $enum } from 'ts-enum-util'
 
 import { environment } from '../../environments/environment'
 import { transformError } from '../common/common'
-import { IUser, User } from '../user/user'
+import { IUser, User } from '../user/user/user'
 import { Role } from './auth.enum'
 import { AuthService, IAuthStatus, IServerAuthResponse } from './auth.service'
 
