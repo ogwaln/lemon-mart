@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { ActivatedRoute } from '@angular/router'
 import { BehaviorSubject, Observable, combineLatest, of } from 'rxjs'
 import { filter, map, startWith, tap } from 'rxjs/operators'
 import { SubSink } from 'subsink'
@@ -37,7 +38,8 @@ export class ProfileComponent
     private formBuilder: FormBuilder,
     private userService: UserService,
     private authService: AuthService,
-    private uiService: UiService
+    private uiService: UiService,
+    private route: ActivatedRoute
   ) {
     super()
   }
@@ -78,13 +80,19 @@ export class ProfileComponent
 
   ngOnInit() {
     this.formGroup = this.buildForm()
-
-    this.subs.sink = combineLatest([this.loadFromCache(), this.authService.currentUser$])
-      .pipe(
-        filter(([cachedUser, me]) => cachedUser != null || me != null),
-        tap(([cachedUser, me]) => this.patchUser(cachedUser || me))
-      )
-      .subscribe()
+    if (this.route.snapshot.data.user) {
+      this.patchUser(this.route.snapshot.data.user)
+    } else {
+      this.subs.sink = combineLatest([
+        this.loadFromCache(),
+        this.authService.currentUser$,
+      ])
+        .pipe(
+          filter(([cachedUser, me]) => cachedUser != null || me != null),
+          tap(([cachedUser, me]) => this.patchUser(cachedUser || me))
+        )
+        .subscribe()
+    }
   }
 
   patchUser(user: IUser) {
