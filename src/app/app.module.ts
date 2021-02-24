@@ -6,6 +6,9 @@ import { FlexLayoutModule } from '@angular/flex-layout'
 import { ReactiveFormsModule } from '@angular/forms'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { EntityDataModule } from '@ngrx/data'
+import { EffectsModule } from '@ngrx/effects'
+import { StoreModule } from '@ngrx/store'
 import { IConfig, NgxMaskModule } from 'ngx-mask'
 
 import { environment } from '../environments/environment'
@@ -16,15 +19,13 @@ import { AuthHttpInterceptor } from './auth/auth-http-interceptor'
 import { authFactory } from './auth/auth.factory'
 import { AuthService } from './auth/auth.service'
 import { SimpleDialogComponent } from './common/simple-dialog.component'
+import { entityConfig } from './entity-metadata'
 import { HomeComponent } from './home/home.component'
 import { LoginComponent } from './login/login.component'
 import { NavigationMenuComponent } from './navigation-menu/navigation-menu.component'
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component'
-import { FieldErrorModule } from './user-controls/field-error/field-error.module';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { EntityDataModule } from '@ngrx/data';
-import { entityConfig } from './entity-metadata'
+import { FieldErrorModule } from './user-controls/field-error/field-error.module'
+import { UserService } from './user/user/user.service'
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {
   showMaskTyped: true,
@@ -66,6 +67,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {
       useClass: AuthHttpInterceptor,
       multi: true,
     },
+    UserService,
   ],
   bootstrap: [AppComponent],
   entryComponents: [SimpleDialogComponent],
