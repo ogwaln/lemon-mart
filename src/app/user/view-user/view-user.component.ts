@@ -1,5 +1,5 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core'
-import { Router } from '@angular/router'
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
+import { ActivatedRoute, Router } from '@angular/router'
 import { BehaviorSubject } from 'rxjs'
 
 import { IUser, User } from '../user/user'
@@ -36,16 +36,21 @@ import { IUser, User } from '../user/user'
     `,
   ],
 })
-export class ViewUserComponent implements OnChanges {
-  @Input()
-  user!: IUser
+export class ViewUserComponent implements OnInit, OnChanges {
+  @Input() user!: IUser
   readonly currentUser$ = new BehaviorSubject(new User())
 
   get editMode() {
     return !this.user
   }
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    if (this.route.snapshot.data.user) {
+      this.currentUser$.next(this.route.snapshot.data.user)
+    }
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.currentUser$.next(User.Build(changes.user.currentValue))

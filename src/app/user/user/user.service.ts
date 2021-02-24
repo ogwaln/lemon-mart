@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable, throwError } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
+import { Collection } from 'typescript'
 
 import { environment } from '../../../environments/environment'
 import { AuthService } from '../../auth/auth.service'
@@ -12,6 +13,12 @@ import { IUser, User } from './user'
 export interface IUserService {
   getUser(id: string): Observable<IUser>
   updateUser(id: string, user: IUser): Observable<IUser>
+  getUsers(pageSize: number, searchText: string, pagesToSkip: number): Observable<IUsers>
+}
+
+export interface IUsers {
+  data: IUser[]
+  total: number
 }
 
 @Injectable({
@@ -28,6 +35,27 @@ export class UserService extends CacheService implements IUserService {
     }
 
     return this.httpClient.get<IUser>(`${environment.baseUrl}/v2/user/${id}`)
+  }
+
+  getUsers(
+    pageSize: number,
+    searchText = '',
+    pagesToSkip = 0,
+    sortColumn = '',
+    sortDirection: '' | 'asc' | 'desc' = 'asc'
+  ): Observable<IUsers> {
+    const recordsToSkip = pageSize * pagesToSkip
+    if (sortColumn) {
+      sortColumn = sortDirection === 'desc' ? `-${sortColumn}` : sortColumn
+    }
+    return this.httpClient.get<IUsers>(`${environment.baseUrl}/v2/users`, {
+      params: {
+        filter: searchText,
+        skip: recordsToSkip.toString(),
+        limit: pageSize.toString(),
+        sortKey: sortColumn,
+      },
+    })
   }
 
   updateUser(id: string, user: IUser): Observable<IUser> {
