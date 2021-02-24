@@ -20,7 +20,11 @@ import { HomeComponent } from './home/home.component'
 import { LoginComponent } from './login/login.component'
 import { NavigationMenuComponent } from './navigation-menu/navigation-menu.component'
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component'
-import { FieldErrorModule } from './user-controls/field-error/field-error.module'
+import { FieldErrorModule } from './user-controls/field-error/field-error.module';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { EntityDataModule } from '@ngrx/data';
+import { entityConfig } from './entity-metadata'
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {
   showMaskTyped: true,
@@ -47,6 +51,9 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {
     NgxMaskModule.forRoot(options),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
+    StoreModule.forRoot({}, {}),
+    EffectsModule.forRoot([]),
+    EntityDataModule.forRoot(entityConfig),
   ],
   providers: [
     {
