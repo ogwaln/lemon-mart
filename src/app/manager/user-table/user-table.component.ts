@@ -5,8 +5,7 @@ import { MatSort, SortDirection } from '@angular/material/sort'
 import { BehaviorSubject, Observable, Subject, merge, of } from 'rxjs'
 import { catchError, debounceTime, map, startWith, switchMap } from 'rxjs/operators'
 import { OptionalTextValidation } from 'src/app/common/validations'
-import { IUser, User } from 'src/app/user/user/user'
-import { UserEntityService } from 'src/app/user/user/user.entity.service'
+import { IUser } from 'src/app/user/user/user'
 import { IUsers, UserService } from 'src/app/user/user/user.service'
 import { SubSink } from 'subsink'
 
@@ -34,11 +33,9 @@ export class UserTableComponent implements OnDestroy, AfterViewInit {
   @ViewChild(MatSort, { static: false }) sort!: MatSort
 
   constructor(
-    private userService: UserService,
-    private userEntityService: UserEntityService
+    private userService: UserService // private userEntityService: UserEntityService
   ) {
-    this.loading$ = merge(this.userEntityService.loading$, this.isLoadingResults$)
-    // this.loading$ = this.isLoadingResults$ //Pre-NgRx Data
+    // this.loading$ = merge(this.userEntityService.loading$, this.isLoadingResults$)
   }
 
   getUsers(
@@ -48,33 +45,13 @@ export class UserTableComponent implements OnDestroy, AfterViewInit {
     sortColumn: string,
     sortDirection: SortDirection
   ): Observable<IUsers> {
-    if (this.useNgRxData) {
-      return this.userEntityService.getAll().pipe(
-        map((value) => {
-          return { total: value.length, data: value }
-        })
-      )
-    } else {
-      return this.userService.getUsers(
-        pageSize,
-        searchText,
-        pagesToSkip,
-        sortColumn,
-        sortDirection
-      )
-    }
-  }
-
-  add(user: User) {
-    this.userEntityService.add(user)
-  }
-
-  delete(user: User) {
-    this.userEntityService.delete(user._id)
-  }
-
-  update(user: User) {
-    this.userEntityService.update(user)
+    return this.userService.getUsers(
+      pageSize,
+      searchText,
+      pagesToSkip,
+      sortColumn,
+      sortDirection
+    )
   }
 
   ngOnDestroy(): void {
