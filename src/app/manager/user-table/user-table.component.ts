@@ -35,6 +35,7 @@ export class UserTableComponent implements OnDestroy, AfterViewInit {
   constructor(
     private userService: UserService // private userEntityService: UserEntityService
   ) {
+    this.loading$ = this.isLoadingResults$
     // this.loading$ = merge(this.userEntityService.loading$, this.isLoadingResults$)
   }
 

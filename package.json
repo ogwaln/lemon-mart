@@ -20,7 +20,7 @@
     "lint:tsc": "tsc --noEmit --skipLibCheck",
     "init:env": "init-dev-env generate-dot-env example.env -f",
     "test:a11y": "pa11y --standar Section508 http://localhost:5000",
-    "predocker:build": "npm run build:prod && npm test -- --watch=false",
+    "predocker:build": "npm run build",
     "docker:build": "cross-conf-env docker image build . -t $npm_package_config_imageRepo:$npm_package_version",
     "postdocker:build": "npm run docker:tag",
     "docker:tag": " cross-conf-env docker image tag $npm_package_config_imageRepo:$npm_package_version $npm_package_config_imageRepo:latest",
@@ -35,7 +35,13 @@
     "docker:debugmessage": "echo Docker Debug Completed Successfully! Hit Ctrl+C to terminate log tailing.",
     "docker:debug": "run-s -cs docker:build docker:run docker:open docker:debugmessage docker:taillogs",
     "prenow:publish": "npm run build:prod",
-    "now:publish": "now --platform-version 2 dist/lemon-mart"
+    "now:publish": "now --platform-version 2 dist/lemon-mart",
+    "aws:login:win": "cross-conf-env aws ecr get-login --no-include-email --region $npm_package_config_awsRegion > dockerLogin.cmd && call dockerLogin.cmd && del dockerLogin.cmd",
+    "aws:login:mac": "eval $(aws ecr get-login --no-include-email --region $npm_package_config_awsRegion)",
+    "aws:login": "run-p -cs aws:login:win aws:login:mac",
+    "aws:deploy": "cross-conf-env docker run --env-file ./.env silintl/ecs-deploy -c $npm_package_config_awsEcsCluster -n $npm_package_config_awsService -i $npm_package_config_imageRepo:latest -r $npm_package_config_awsRegion --timeout 1000",
+    "aws:release": "run-s -cs aws:login docker:publish aws:deploy",
+    "aws:publish:compose": "cross-conf-env ecs-cli compose --file docker-compose.aws.yml -p $npm_package_name -c $npm_package_config_awsEcsCluster -r $npm_package_config_awsRegion create"
   },
   "private": true,
   "dependencies": {
@@ -60,6 +66,7 @@
     "jasmine": "^3.6.4",
     "jwt-decode": "^3.1.2",
     "module": "^1.2.5",
+    "mrm-task-npm-docker": "^1.1.1",
     "ngx-mask": "^11.1.4",
     "npm-check-updates": "^11.1.4",
     "pa11y": "^5.3.0",
@@ -122,9 +129,12 @@
     }
   },
   "config": {
-    "imageRepo": "thosejwis/lemon-mart-1",
-    "imageName": "lemon-mart",
+    "imageRepo": "847579694966.dkr.ecr.us-east-2.amazonaws.com/lemon-mart-1",
+    "imageName": "lemon-mart-1",
     "imagePort": "8080",
-    "internalContainerPort": "3000"
+    "internalContainerPort": "3000",
+    "awsRegion": "us-east-2",
+    "awsEcsCluster": "fargate-cluster",
+    "awsService": "lemon-mart-service-1"
   }
 }
