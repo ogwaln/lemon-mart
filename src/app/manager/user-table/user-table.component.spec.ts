@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { FormsModule } from '@angular/forms'
 import { of } from 'rxjs'
 
@@ -13,11 +13,10 @@ describe('UserTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserTableComponent ],
+      declarations: [UserTableComponent],
       providers: commonTestingProviders,
       imports: commonTestingModules.concat([FormsModule, ManagerMaterialModule]),
-    })
-    .compileComponents();
+    }).compileComponents()
   })
 
   beforeEach(() => {
