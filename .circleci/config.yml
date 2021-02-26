@@ -8,7 +8,8 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 20.10.2
       - run:
           name: Execute Pipeline (Build Source -> Test -> Build Web Server)
           command: |
@@ -36,7 +37,8 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 20.10.2
       - aws-cli/setup
       - run: npm ci
       - run:
