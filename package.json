@@ -134,7 +134,7 @@
     "imagePort": "8080",
     "internalContainerPort": "3000",
     "awsRegion": "us-east-2",
-    "awsEcsCluster": "fargate-cluster",
+    "awsEcsCluster": "fargat-cluster",
     "awsService": "lemon-mart-service-1"
   }
 }
